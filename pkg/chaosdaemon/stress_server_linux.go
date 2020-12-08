@@ -77,6 +77,7 @@ func (s *DaemonServer) ExecStressors(ctx context.Context,
 		return nil, err
 	}
 	log.Info("Start process successfully")
+	fmt.Println("Start process successfully", cmd.Process.Pid)
 
 	procState, err := process.NewProcess(int32(cmd.Process.Pid))
 	if err != nil {
@@ -87,6 +88,7 @@ func (s *DaemonServer) ExecStressors(ctx context.Context,
 	if err = control.Add(cgroups.Process{Pid: cmd.Process.Pid}); err != nil {
 		if kerr := cmd.Process.Kill(); kerr != nil {
 			log.Error(kerr, "kill stressors failed", "request", req)
+			fmt.Println(kerr)
 		}
 		return nil, err
 	}
@@ -98,6 +100,7 @@ func (s *DaemonServer) ExecStressors(ctx context.Context,
 		}
 
 		log.Info("send signal to resume process")
+		fmt.Println("send signal to resume process")
 		time.Sleep(time.Millisecond)
 
 		comm, err := ReadCommName(cmd.Process.Pid)
@@ -106,9 +109,11 @@ func (s *DaemonServer) ExecStressors(ctx context.Context,
 		}
 		if comm != "pause\n" {
 			log.Info("pause has been resumed", "comm", comm)
+			fmt.Println("pause has been resumed", comm)
 			break
 		}
 		log.Info("the process hasn't resumed, step into the following loop", "comm", comm)
+		fmt.Println("the process hasn't resumed, step into the following loop", comm)
 	}
 
 	return &pb.ExecStressResponse{
