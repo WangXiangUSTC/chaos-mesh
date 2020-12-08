@@ -15,6 +15,7 @@ package chaosdaemon
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/golang/protobuf/ptypes/empty"
 
@@ -22,6 +23,7 @@ import (
 )
 
 func (s *DaemonServer) ExecStressors(context.Context, *pb.ExecStressRequest) (*pb.ExecStressResponse, error) {
+	fmt.Println("Executing stressors, request:", req)
 	return nil, nil
 }
 
