@@ -14,6 +14,7 @@
 package bpm
 
 import (
+	"fmt"
 	"context"
 	"os/exec"
 	"strings"
@@ -67,6 +68,7 @@ func (b *ProcessBuilder) Build() *ManagedProcess {
 	}
 
 	log.Info("build command", "command", cmd+" "+strings.Join(args, " "))
+	fmt.Println("build command", cmd, strings.Join(args, " "))
 
 	command := exec.CommandContext(b.ctx, cmd, args...)
 	command.SysProcAttr = &syscall.SysProcAttr{}
