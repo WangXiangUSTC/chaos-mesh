@@ -22,7 +22,7 @@ import (
 	pb "github.com/chaos-mesh/chaos-mesh/pkg/chaosdaemon/pb"
 )
 
-func (s *DaemonServer) ExecStressors(context.Context, *pb.ExecStressRequest) (*pb.ExecStressResponse, error) {
+func (s *DaemonServer) ExecStressors(ctx context.Context, req *pb.ExecStressRequest) (*pb.ExecStressResponse, error) {
 	fmt.Println("Executing stressors, request:", req)
 	return nil, nil
 }
