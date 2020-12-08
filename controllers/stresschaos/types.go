@@ -250,6 +250,7 @@ func (r *endpoint) applyPod(ctx context.Context, pod *v1.Pod, chaos *v1alpha1.St
 	if err != nil {
 		return err
 	}
+	r.Log.Info("ExecStressors", "resp", res)
 
 	instancesLock.Lock()
 	chaos.Status.Instances[key] = v1alpha1.StressInstance{
