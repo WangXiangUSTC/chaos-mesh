@@ -115,6 +115,7 @@ func (m *BackgroundProcessManager) StartProcess(cmd *ManagedProcess) error {
 	log := log.WithValues("pid", pid)
 
 	go func() {
+		fmt.Println("cmd.Wait()")
 		err := cmd.Wait()
 		if err != nil {
 			err, ok := err.(*exec.ExitError)
@@ -122,13 +123,16 @@ func (m *BackgroundProcessManager) StartProcess(cmd *ManagedProcess) error {
 				status := err.Sys().(syscall.WaitStatus)
 				if status.Signaled() && status.Signal() == syscall.SIGTERM {
 					log.Info("process stopped with SIGTERM signal")
+					fmt.Println("process stopped with SIGTERM signal")
 				}
 			} else {
 				log.Error(err, "process exited accidentally")
+				fmt.Println(err, "process exited accidentally")
 			}
 		}
 
 		log.Info("process stopped")
+		fmt.Println("process stopped")
 
 		deathChannel <- true
 		m.deathSig.Delete(pair)
