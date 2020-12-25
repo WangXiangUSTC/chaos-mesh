@@ -118,6 +118,7 @@ func (m *BackgroundProcessManager) StartProcess(cmd *ManagedProcess) error {
 		fmt.Println("cmd.Wait()")
 		err := cmd.Wait()
 		if err != nil {
+			fmt.Println(err)
 			err, ok := err.(*exec.ExitError)
 			if ok {
 				status := err.Sys().(syscall.WaitStatus)
