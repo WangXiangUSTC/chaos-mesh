@@ -263,6 +263,7 @@ generate: $(GOBIN)/controller-gen chaos-build
 
 yaml: manifests ensure-kustomize
 	$(KUSTOMIZE_BIN) build config/default > manifests/crd.yaml
+	$(KUSTOMIZE_BIN) build config/default > helm/chaos-mesh/crds/crd.yaml
 
 # Generate Go files from Chaos Mesh proto files.
 ifeq ($(IN_DOCKER),1)
